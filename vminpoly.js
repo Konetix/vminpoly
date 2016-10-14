@@ -1344,6 +1344,9 @@
               if (rule.name === 'media') {
                 prelude = '';
                 mar = false;
+                minwidth = false;
+                maxwidth = false;
+                emValue = 0;
                 nums = [];
                 _ref1 = rule.prelude;
                 for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
@@ -1360,6 +1363,15 @@
                       if (t1.tokenType === 'NUMBER') {
                         nums.push(parseInt(source));
                       }
+                      if (source === 'min-width') {
+                        var minwidth = true;
+                      }
+                      if (source === 'max-width') {
+                        var maxwidth = true;
+                      }
+                      if (source.search('^[0-9]{0,5}(\.[0-9]{0,7}){0,1}em$') > -1) {
+                        emValue = parseInt(source);
+                      }
                       prelude += source;
                     }
                     prelude += ')';
@@ -1367,7 +1379,7 @@
                     prelude += t.toSourceString();
                   }
                 }
-                if (vpAspectRatio < nums[0] / nums[1]) {
+                if ((window.screen.width > emValue*16 && minwidth) || (window.screen.width < emValue*16 && maxwidth) || vpAspectRatio < nums[0] / nums[1]) {
                   sheetCss += generateSheetCode(rule);
                 }
               } else {
@@ -1466,7 +1478,6 @@
     window.onload = contentLoaded;
     window.onresize = onresize;
   };
-
 
   if (!browserSupportsUnitsNatively()) {
     initLayoutEngine();
