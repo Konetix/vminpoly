@@ -1320,7 +1320,7 @@
           for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
             token = _ref1[_j];
             if (token.tokenType === 'DIMENSION' && (token.unit === 'vmin' || token.unit === 'vh' || token.unit === 'vw')) {
-              ruleCss += "" + (Math.floor(token.num * dims[token.unit])) + "px";
+              ruleCss += "" + (Math.floor(token.num * dims[token.unit])) + "px!improtant";
             } else {
               ruleCss += token.toSourceString();
             }
